@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.AuthenticatedPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -67,7 +69,6 @@ public class PTOController {
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")
 	public String deletePTO(@PathVariable("id") String id) {
-		
 		PTO pto = ptoQueryInPort.getPTO(id);
 		ptoCommandInPort.cancelPTORequest(pto);
 		

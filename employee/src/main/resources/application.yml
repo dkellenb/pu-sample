@@ -27,8 +27,8 @@ spring:
             client-name: keycloak
         provider:
           keycloak:
-            authorization-uri: http://localhost:8080/auth/realms/Mike/protocol/openid-connect/auth
-            token-uri: http://localhost:8080/auth/realms/Mike/protocol/openid-connect/token
-            user-info-uri:  http://localhost:8080/auth/realms/Mike/protocol/openid-connect/userinfo
+            authorization-uri: http://localhost:8080/auth/realms/PU/protocol/openid-connect/auth
+            token-uri: http://localhost:8080/auth/realms/PU/protocol/openid-connect/token
+            user-info-uri:  http://localhost:8080/auth/realms/PU/protocol/openid-connect/userinfo
             user-name-attribute: "preferred_username"
-            jwk-set-uri: http://localhost:8080/auth/realms/Mike/protocol/openid-connect/certs
+            jwk-set-uri: http://localhost:8080/auth/realms/PU/protocol/openid-connect/certs

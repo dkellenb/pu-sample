@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface EmployeeRepository extends CrudRepository<Employee, String>  {
+public interface EmployeeRepository extends CrudRepository<HREmployee, String>  {
 
-	List<Employee> findByEmail(String email);
+	List<HREmployee> findByEmail(String email);
 }

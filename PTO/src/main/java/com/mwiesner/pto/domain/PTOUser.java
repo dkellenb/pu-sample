@@ -20,7 +20,7 @@ public class PTOUser extends DefaultOidcUser {
 	
 	public PTOUser(Set<GrantedAuthority> authorities, OidcIdToken idToken, OidcUserInfo userInfo, Employee employee) {
 		super(authorities, idToken, userInfo);
-		this.username = userInfo.getGivenName();
+		this.username = userInfo.getPreferredUsername();
 		this.employee = employee;
 	}
 

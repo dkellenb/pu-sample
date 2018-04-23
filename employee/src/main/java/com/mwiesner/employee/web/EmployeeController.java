@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.mwiesner.employee.domain.Employee;
+import com.mwiesner.employee.domain.HREmployee;
 import com.mwiesner.employee.domain.EmployeeQueryInPort;
 
 import lombok.NonNull;
@@ -23,14 +23,11 @@ public class EmployeeController {
 	@NonNull
 	private EmployeeQueryInPort employeeQueryInPort;
 	
-	@NonNull
-	private PTOGateway ptoGateway;
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET, produces="text/html")
 	public String listPTOs(Model model) {
-		List<Employee> allEmployees = employeeQueryInPort.getAllEmployees();
+		List<HREmployee> allEmployees = employeeQueryInPort.getAllEmployees();
 		model.addAttribute("employeeList", allEmployees);
-		ptoGateway.sendEmployeeToPTO();
 		return "listEmployees";
 	}
 	

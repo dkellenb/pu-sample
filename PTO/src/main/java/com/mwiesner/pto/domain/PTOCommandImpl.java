@@ -25,7 +25,8 @@ public class PTOCommandImpl implements PTOCommandInPort {
 		return savedPTO;
 	}
 	
-	@PreAuthorize("hasAuthority('RIGHT_CANCEL_OWN_PTO')")
+	//@PreAuthorize("hasAuthority('RIGHT_CANCEL_OWN_PTO') and #pto.requester.id == principal.username")
+	@PreAuthorize("hasAuthority('RIGHT_CANCEL_OWN_PTO') and hasPermission(#pto, 'cancel')")
 	public void cancelPTORequest(PTO pto) {
 		ptoRepository.delete(pto);
 	}

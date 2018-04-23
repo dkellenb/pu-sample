@@ -17,6 +17,9 @@ public class EmployeeQueryImpl implements EmployeeQueryInPort {
 	@NonNull
 	private EmployeeRepository employeeRepository;
 	
+	@NonNull
+	private EmployeeSyncOutPort employeeSyncOutPort;
+	
 	
 	public Employee getEmployeeByEmail(String email) {
 		List<Employee> employeeList = employeeRepository.findByEmail(email);
@@ -28,14 +31,8 @@ public class EmployeeQueryImpl implements EmployeeQueryInPort {
 	
 	@PostConstruct
 	public void dataInitializer() {
-		employeeRepository.deleteAll();
-		Employee max = Employee.of("max", "no-reply@example.com", "Max", "Mustermann");
-		employeeRepository.save(max);
-		Employee mike = Employee.of("mike", "no-reply@mwiesner.com", "Mike", "Wiesner");
-		employeeRepository.save(mike);
-		
-		
-		
+		List<Employee> employeeList = employeeSyncOutPort.fetchEmployeesFromEmployeeApp();
+		employeeRepository.saveAll(employeeList);
 	}
 
 }

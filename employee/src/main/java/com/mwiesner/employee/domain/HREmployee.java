@@ -12,7 +12,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor(staticName="of")
 @Builder
-public class Employee {
+public class HREmployee {
 	
 	@Id
 	private String id;

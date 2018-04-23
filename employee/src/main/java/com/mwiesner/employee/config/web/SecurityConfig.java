@@ -22,7 +22,6 @@ import org.springframework.security.web.access.expression.WebExpressionVoter;
 import com.mwiesner.employee.web.PUGrantedAuthoritiesMapper;
 
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled=true, prePostEnabled=true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	
@@ -34,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //	public UserDetailsService userDetailsService() {
 //		InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
 //		manager.createUser(
-//				User.withDefaultPasswordEncoder().username("user").password("test").roles("Employee").build());
+//				User.withDefaultPasswordEncoder().username("user").password("test").roles("HREmployee").build());
 //		return manager;
 //	}
 	
@@ -43,11 +42,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 				.accessDecisionManager(accessDecisionManager())//
+				.antMatchers("/sync/**")//
+					.permitAll()//
 				.anyRequest()//
 					.authenticated()//
 					.and()//
-				.sessionManagement()//
-					.disable()//
 				.csrf()//
 					.disable()//
 				.oauth2Login()//

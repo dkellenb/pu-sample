@@ -4,8 +4,8 @@ import java.util.List;
 
 public interface EmployeeQueryInPort {
 	
-	Employee getEmployeeByEmail(String email);
+	HREmployee getEmployeeByEmail(String email);
 
-	List<Employee> getAllEmployees();
+	List<HREmployee> getAllEmployees();
 
 }

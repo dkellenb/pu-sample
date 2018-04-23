@@ -31,6 +31,7 @@ public class PTOQueryImpl implements PTOQueryInPort {
 		return arrayList;
 	}
 	
+	
 	public PTO getPTO(String id) {
 		return ptoRepository.findById(id).get();
 	}
