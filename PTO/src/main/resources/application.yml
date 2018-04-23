@@ -1,0 +1,30 @@
+server:
+  port: 8081
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: DEBUG
+spring:
+  thymeleaf:
+    cache: false
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            provider: keycloak
+            client-id: PTO
+            client-secret: 6c00370e-7f8b-4b29-8b4d-6ce387a415ea
+            client-authentication-method: basic
+            authorization-grant-type: authorization_code
+            redirect-uri-template: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: openid, profile, email, address, phone
+            client-name: keycloak
+        provider:
+          keycloak:
+            authorization-uri: http://localhost:8080/auth/realms/Mike/protocol/openid-connect/auth
+            token-uri: http://localhost:8080/auth/realms/Mike/protocol/openid-connect/token
+            user-info-uri:  http://localhost:8080/auth/realms/Mike/protocol/openid-connect/userinfo
+            user-name-attribute: "preferred_username"
+            jwk-set-uri: http://localhost:8080/auth/realms/Mike/protocol/openid-connect/certs

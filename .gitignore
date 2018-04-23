@@ -1,0 +1,6 @@
+**/wrapper
+**/bin
+**/.gradle
+.classpath
+**/.sts4-cache
+.project
