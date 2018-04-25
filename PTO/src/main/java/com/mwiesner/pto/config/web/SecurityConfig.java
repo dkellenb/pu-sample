@@ -16,7 +16,6 @@ import com.mwiesner.pto.web.PTOGrantedAuthoritiesMapper;
 import com.mwiesner.pto.web.PTOUserService;
 
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled=true, prePostEnabled=true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired

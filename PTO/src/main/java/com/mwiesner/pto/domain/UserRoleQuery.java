@@ -23,9 +23,9 @@ public class UserRoleQuery implements UserRoleQueryInPort {
 	public void dataInitializer() {
 		UserRole userRole = UserRole.builder()//
 			.id("Employee")//
-			.right(UserRight.of("LIST_OWN_PTO"))//
-			.right(UserRight.of("CREATE_OWN_PTO"))//
-			.right(UserRight.of("CANCEL_OWN_PTO"))//
+			.right(UserRight.of("LIST_PTO"))//
+			.right(UserRight.of("CREATE_PTO"))//
+			.right(UserRight.of("CANCEL_PTO"))//
 			.build();
 		userRoleRepository.save(userRole);
 	}

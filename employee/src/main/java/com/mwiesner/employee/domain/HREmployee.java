@@ -11,8 +11,12 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor(staticName="of")
-@Builder
+@Builder(toBuilder=true)
 public class HREmployee {
+	
+	private HREmployee() {
+		
+	}
 	
 	@Id
 	private String id;

@@ -30,22 +30,23 @@ public class PTOGrantedAuthoritiesMapper implements GrantedAuthoritiesMapper {
 
 	@Override
 	public Collection<? extends GrantedAuthority> mapAuthorities(Collection<? extends GrantedAuthority> authorities) {
-		Set<GrantedAuthority> mappedAuthorities = new HashSet<>();
+		Set<GrantedAuthority> oidcMappedAuthorities = new HashSet<>();
+		Set<GrantedAuthority> ptoMappedAuthorities = new HashSet<>();
 
-		extractIdTokenClaims(authorities, mappedAuthorities);
+		extractIdTokenClaims(authorities, oidcMappedAuthorities);
 
-		mapRolesToRights(this.userRoleQueryInPort, mappedAuthorities);
+		mapRolesToRights(this.userRoleQueryInPort, oidcMappedAuthorities, ptoMappedAuthorities);
 
-		return mappedAuthorities;
+		return ptoMappedAuthorities;
 	}
 
 	private static void mapRolesToRights(UserRoleQueryInPort userRoleQueryInPort,
-			Set<GrantedAuthority> mappedAuthorities) {
-		mappedAuthorities.forEach(authority -> {
+			Set<GrantedAuthority> oidcMppedAuthorities, Set<GrantedAuthority> ptoMappedAuthorities) {
+		oidcMppedAuthorities.forEach(authority -> {
 			try {
 				String authorityWithoutRolePrefix = authority.getAuthority().substring(5);
 				UserRole userRole = userRoleQueryInPort.findUserRoleByName(authorityWithoutRolePrefix);
-				mappedAuthorities.addAll(
+				ptoMappedAuthorities.addAll(
 						AuthorityUtils.commaSeparatedStringToAuthorityList(userRole.toCommaSeperatedRightsList()));
 			} catch (NoSuchElementException ex) {
 				log.info("Role {} not found", authority.getAuthority());
@@ -54,15 +55,15 @@ public class PTOGrantedAuthoritiesMapper implements GrantedAuthoritiesMapper {
 	}
 
 	private static void extractIdTokenClaims(Collection<? extends GrantedAuthority> authorities,
-			Set<GrantedAuthority> mappedAuthorities) {
+			Set<GrantedAuthority> oidcMappedAuthorities) {
 		authorities.forEach(authority -> {
 			if (OidcUserAuthority.class.isInstance(authority)) {
 				OidcUserAuthority oidcUserAuthority = (OidcUserAuthority) authority;
 				OidcIdToken idToken = oidcUserAuthority.getIdToken();
 
 				List<String> rolesAsStringList = idToken.getClaimAsStringList("roles");
-				rolesAsStringList.forEach( role -> {
-					mappedAuthorities.add(new SimpleGrantedAuthority(role));
+				rolesAsStringList.forEach(role -> {
+					oidcMappedAuthorities.add(new SimpleGrantedAuthority(role));
 				});
 			}
 		});

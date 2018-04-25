@@ -23,7 +23,7 @@ public class PTOQueryImpl implements PTOQueryInPort {
 	@NonNull
 	private EmployeeRepository employeeRepository;
 	
-	@PreAuthorize("hasAuthority('RIGHT_LIST_OWN_PTO')")
+	@PreAuthorize("hasAuthority('RIGHT_LIST_PTO')")
 	public List<PTO> getAllPTOs() {
 		Iterable<PTO> findAll = ptoRepository.findAll();
 		ArrayList<PTO> arrayList = new ArrayList<PTO>();
