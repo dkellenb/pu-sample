@@ -37,6 +37,7 @@ public class PTOGrantedAuthoritiesMapper implements GrantedAuthoritiesMapper {
 
 		mapRolesToRights(this.userRoleQueryInPort, oidcMappedAuthorities, ptoMappedAuthorities);
 
+		ptoMappedAuthorities.addAll(oidcMappedAuthorities);
 		return ptoMappedAuthorities;
 	}
 
