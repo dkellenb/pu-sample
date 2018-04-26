@@ -4,4 +4,6 @@ public interface EmployeeQueryInPort {
 	
 	Employee getEmployeeByEmail(String email);
 
+	Employee getCurrentActiveEmployee();
+
 }

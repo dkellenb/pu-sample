@@ -10,9 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -39,20 +42,20 @@ public class PTOController {
 	@NonNull
 	private PTOQueryInPort ptoQueryInPort;
 
-	@RequestMapping(method = RequestMethod.GET)
+	@GetMapping
 	public String listPTOs(Model model) {
 		List<PTO> allPTOs = ptoQueryInPort.getAllPTOs();
 		model.addAttribute("requestList", allPTOs);
 		return "listPTOs";
 	}
 
-	@RequestMapping(params = "form")
+	@GetMapping(params="form")
 	public String createForm(Model uiModel) {
 		uiModel.addAttribute("pto", PTO.of(null, null, LocalDate.now(), LocalDate.now(), ""));
 		return "createPTO";
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@PostMapping
 	public String createPTO(PTO pto, BindingResult bindingResult, Model uiModel, @CurrentEmployee Employee employee) {
 
 		if (bindingResult.hasErrors()) {
@@ -67,7 +70,7 @@ public class PTOController {
 		return "redirect:/PTO";
 	}
 	
-	@RequestMapping(method=RequestMethod.DELETE, value="/{id}")
+	@DeleteMapping("/{id}")
 	public String deletePTO(@PathVariable("id") String id) {
 		PTO pto = ptoQueryInPort.getPTO(id);
 		ptoCommandInPort.cancelPTORequest(pto);

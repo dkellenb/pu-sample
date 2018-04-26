@@ -4,7 +4,11 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.bson.internal.UnsignedLongs;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import lombok.NonNull;
@@ -27,6 +31,24 @@ public class EmployeeQueryImpl implements EmployeeQueryInPort {
 			throw new IllegalStateException("Expected one matching employee, but found "+employeeList.size()+" with the email adress "+email);
 		}
 		return employeeList.get(0);
+	}
+	
+	public Employee getCurrentActiveEmployee() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication == null) {
+			throw new IllegalStateException("No authenticated employee available.");
+		}
+		Object principal = authentication.getPrincipal();
+		
+		final PTOUser ptoUser;
+		if (principal instanceof PTOUser) {
+			ptoUser = (PTOUser) principal;
+		}
+		else {
+			throw new IllegalStateException("Wrong principal type, expected PTOUser, but was " + principal.getClass());
+		}
+		return ptoUser.getEmployee();
+
 	}
 	
 	@PostConstruct
